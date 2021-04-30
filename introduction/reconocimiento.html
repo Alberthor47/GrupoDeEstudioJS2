@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Clasificador de Imagenes</title>
+        <script src="https://unpkg.com/ml5@0.1.3/dist/ml5.min.js"></script>
+    </head>
+    <body style="background-color: aliceblue; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: beige;
+          border: 2px solid;
+          border-radius: 6px;
+          margin: 3em 6em;
+      ">
+        <h1>Clasificador de imagenes <br> con Tensorflow.js y ml5.js</h1>
+        <img style="border: black 2px solid; border-radius: 6px;" src="./images/chihuahua.jpeg" crossorigin="anonymous" id="imagen" width="400">
+        <p> 
+          Esto es un <strong> <span id="rusultado"> .... </span> </strong>
+          Con una certeza del <strong> <span id="probabilidad"> .... </span> </strong>
+        </p>
+      </div>
+        <script>
+            const imagen = document.getElementById("imagen");
+            const resultado = document.getElementById("rusultado");
+            const probabilidad = document.getElementById("probabilidad");
+
+            const clasificador = ml5.imageClassifier("MobileNet",function (){
+                console.log("Modelo cargado");
+            });
+            clasificador.predict(imagen,function (err,res){
+                console.log(res);
+                resultado.innerText = res[0].className;
+                probabilidad.innerText = `${(res[0].probability*100).toFixed(2)}%`;
+            });
+        </script>
+    </body>
+</html>
