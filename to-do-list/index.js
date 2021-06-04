@@ -12,47 +12,39 @@ const miEntrada = document.getElementById('entrada')
 const miLista = document.getElementById('lista')
 
 let contenidoDeLista = [];
+let numeroDeReferencia = 0;
+
 let listaEnString;
 contenidoDeLista.push(localStorage.getItem('ListaDeTareas'));
 pintarListaEnHTML();
 
-const i = function init() {
+const main = function init() {
   let lista = localStorage.getItem('ListaDeTareas');
-  console.log(lista)
   if (lista) {
     contenidoDeLista = lista.split(/\/li>/);
-    contenidoDeLista.forEach((item, index, arr) => arr[index] = item + '/li>');
+    contenidoDeLista.forEach((item, index, arr) => {
+        arr[index] = item + '/li>'
+    });
   }
-  console.log('Nuestra lista traida del ls', contenidoDeLista);
+
 }();
 
-// function HighOrderFunction(callBackFunction) {
-//   callBackFunction();
-// }
-
-// High order funtion
-// function saludar(funcToWrap, horaDelSaludo) {
-//   funcToWrap(horaDelSaludo);
-// }
-
-// funcion regular
-// function tipoDeSaludo(tiempo) {
-//   let saludo = 'Hola mi nombre es alberto y son las: ';
-//   console.log(saludo + tiempo);
-// }
-
-// En ejecucion
-// saludar(tipoDeSaludo, '12:30');
-
 function agregarTarea() {
-  //aqui agregaremos una tarea a la lista
-  // stringDeLista += `<li> ${miEntrada.value} </li>\n` //Metodo más simple para concatenar los items de la lista
-
-  let item = `<li> ${miEntrada.value}  <button id="${numeroDeTarea += 1}">Completado</button> </li>\n`;
+  let item = `<li> ${miEntrada.value} <button id=${numeroDeReferencia+1}>Completado</button> </li>\n`;
+  numeroDeReferencia ++;
+  // let botonDeItem = document.getElementById(`${numeroDeReferencia}`);
+  // botonDeItem.addEventListener('click', elimarTarea);
   contenidoDeLista.push(item);
 
   pintarListaEnHTML();
   localStorage.setItem('ListaDeTareas', listaEnString);
+
+  let longitudDeLaLista = miLista.children.length;
+
+  for (let i = 0; i < longitudDeLaLista; i++) {
+    let ele = miLista.children.item(i)
+    console.log('ELEMENTO', ele);
+  }
 }
 
 function pintarListaEnHTML () {
@@ -61,5 +53,37 @@ function pintarListaEnHTML () {
 }
 
 function elimarTarea() {
-  //aqui elimnaermos una tarea de la lista
+  console.log('ELIMINAR LA TAREA');
 }
+
+
+
+// scope es el alcance que tiene mis variables y funciones
+
+// global scoper
+/*
+  let, const o var que se encuentran hasta el tope del documento
+*/
+// function scope
+/*
+var a = 'adios';
+
+function scopeDeFuncion () {
+  var a = 'hola';
+  
+  console.log(a); //hola
+}
+console.log(a); //adios
+*/
+
+// block scope
+/*
+function scopeDeBloke() {
+
+  if (true) {
+    let nivelBloque = 'Estoy dentro'; 
+  }
+
+  // console.log(nivelBloque) //Estoy fuera
+}
+*/
